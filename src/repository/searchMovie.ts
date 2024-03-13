@@ -4,7 +4,7 @@ export async function SearchMovie({
     query,
     page,
   }: {
-    query: string;
+    query?: string;
     page: number | string;
   }) {
     try {

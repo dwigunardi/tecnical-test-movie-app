@@ -1,8 +1,8 @@
 import React from 'react'
 
-function PageTitle(props: {title: string}) {
+function PageTitle(props: {title: string, id: string}) {
   return (
-    <div className="mt-10">
+    <div className="mt-10" id={props.id}>
         <h1 className="text-4xl font-bold"><span className="text-primary">|</span> {props.title}</h1>
       </div>
   )

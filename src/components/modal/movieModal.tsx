@@ -70,7 +70,7 @@ export default function ModalMovie({
                   />
                   ): (
                     <div className="flex flex-col justify-center align-middle items-center">
-                      <NotFound className="w-40 h-40" />
+                      <NotFound className="w-52 h-52" />
                     <h1 className="text-3xl font-bold text-center">No Trailer Found</h1>
                     </div>
                   )}

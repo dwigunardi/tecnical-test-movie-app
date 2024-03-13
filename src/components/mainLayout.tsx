@@ -4,7 +4,7 @@ import Footer from './footer'
 
 function MainLayout({ children, currentPage, query}: { children: React.ReactNode, currentPage: number, query?: string }) {
   return (
-    <div>
+    <div className="flex flex-col gap-3">
         <Navbar currentPage={currentPage} query={query} />
         {children}
         <Footer />

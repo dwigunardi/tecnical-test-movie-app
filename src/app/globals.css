@@ -76,8 +76,12 @@
   }
 }
 
+html {
+  scroll-behavior: smooth !important;
+}
 body {
   background: var(--bg);
   color: var(--fg);
+  
 
 }

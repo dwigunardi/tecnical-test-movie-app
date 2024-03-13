@@ -10,7 +10,6 @@ import React, { useState } from "react";
 import { GoStarFill } from "react-icons/go";
 import { MoviePopular } from "@/types/movieType";
 import dynamic from "next/dynamic";
-// import ModalMovie from "../modal/movieModal";
 
 const ModalMovie = dynamic(() => import("../modal/movieModal"), {
   ssr: false,
@@ -62,11 +61,12 @@ export default function MovieCard({
         </Button>
         <Image
           alt={movie.title}
-          className="animate-fade-in block h-full w-full scale-100 transform object-cover object-center opacity-100 transition duration-300 group-hover:scale-110 group-hover:opacity-70"
+          className="animate-fade-in block min-h-[500px] h-full w-full scale-100 transform object-cover object-center opacity-100 transition duration-300 group-hover:scale-110 group-hover:opacity-70"
           height={"100%"}
-          src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+          src={`${movie.poster_path == null ? "/404PosterNotFound.jpg" : `https://image.tmdb.org/t/p/original/${movie.poster_path}`}`}
           removeWrapper
           width={"100%"}
+          fallbackSrc={'/404PosterNotFound.jpg'}
         />
         <div className="absolute bg-center w-20 h-20 bg-primary top-0 right-0  z-10 rounded-bl-full">
           <div className="my-auto flex flex-col justify-start items-center w-full h-full">
