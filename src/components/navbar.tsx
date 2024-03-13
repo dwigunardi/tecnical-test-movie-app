@@ -28,8 +28,10 @@ const titleFont = localFont({
 })
 
 export default function NavigationBar({
+  query,
   currentPage,
 }: {
+  query?: string
   currentPage: any
 }) {
   const router = useRouter()

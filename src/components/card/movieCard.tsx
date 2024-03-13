@@ -19,11 +19,13 @@ const ModalMovie = dynamic(() => import("../modal/movieModal"), {
 export default function MovieCard({
   movie,
   dataGenre,
-  handleModal
+  handleModal,
+  typeData = "movie"
 }: {
   movie: MoviePopular;
   dataGenre: { id: number; name: string }[];
-  handleModal: any
+  handleModal: any,
+  typeData?: string
 }) {
   const [hover, setHover] = useState(false);
   const {onOpen} = useDisclosure();
@@ -32,6 +34,7 @@ export default function MovieCard({
       handleModal(movie)
       onOpen()
   }
+  
   return (
     <div>
       <Card
@@ -95,10 +98,13 @@ export default function MovieCard({
                   size="sm"
                   key={idx}
                 >
-                  {
+                  { typeData == "movie" ?
                     dataGenre.filter(
                       (item: { id: number; name: string }) => item.id === genre
-                    )[0].name
+                    )[0]?.name
+                  : dataGenre.filter(
+                    (item: { id: number; name: string }) => item.id === genre
+                  )[0]?.name
                   }
                 </Button>
               ))}

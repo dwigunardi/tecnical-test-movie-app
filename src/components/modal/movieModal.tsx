@@ -13,6 +13,7 @@ import { MoviePopular } from "@/types/movieType";
 import { appConfig } from "@/config/appConfig";
 import LoadingRoute from "../loadingRoute";
 import { BsStar, BsStarFill } from "react-icons/bs";
+import { NotFound } from "../iconList";
 
 export default function ModalMovie({
   isOpen,
@@ -21,6 +22,7 @@ export default function ModalMovie({
   movieData,
   genreData,
   youtubeData,
+  typePage = "movie",
 }: {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
@@ -28,10 +30,18 @@ export default function ModalMovie({
   movieData?: MoviePopular;
   genreData: { id: number; name: string }[];
   youtubeData?: any;
+  typePage?: string;
 }) {
+
   return (
     <>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="5xl" scrollBehavior="inside" placement="center">
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        size="5xl"
+        scrollBehavior="inside"
+        placement="center"
+      >
         <ModalContent>
           {(onClose) => (
             <>
@@ -42,20 +52,40 @@ export default function ModalMovie({
                 <Suspense
                   fallback={<LoadingRoute height={"600px"} width={"full"} />}
                 >
-                  <iframe
+                  {youtubeData !== undefined ||  youtubeData?.results.length > 0 ? (
+                    <iframe
                     width="100%"
                     height="600px"
-                    src={`https://www.youtube.com/embed/${youtubeData.key}`}
+                    src={`https://www.youtube.com/embed/${
+                      youtubeData.key && typePage === "movie"
+                        ? youtubeData.key
+                        : youtubeData.key && typePage === "tv"
+                        ? youtubeData.key
+                        : "test"
+                    }`}
                     title={`${movieData?.title} Trailer`}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     loading="lazy"
                   />
+                  ): (
+                    <div className="flex flex-col justify-center align-middle items-center">
+                      <NotFound className="w-40 h-40" />
+                    <h1 className="text-3xl font-bold text-center">No Trailer Found</h1>
+                    </div>
+                  )}
+                  
                 </Suspense>
                 <div className="mt-5 flex flex-col gap-3">
                   <h1>{movieData?.title}</h1>
                   <p>Releases Date : {movieData?.release_date}</p>
-                  <div className="flex justify-start items-center gap-2"> <p>Rating : {movieData?.vote_average.toFixed(2)} </p><span className="text-yellow-300"><BsStarFill /></span></div>
+                  <div className="flex justify-start items-center gap-2">
+                    {" "}
+                    <p>Rating : {movieData?.vote_average.toFixed(2)} </p>
+                    <span className="text-yellow-300">
+                      <BsStarFill />
+                    </span>
+                  </div>
                   <div className="flex justify-start items-center gap-2">
                     {movieData?.genre_ids.map((genre, idx) => (
                       <Button
@@ -66,7 +96,8 @@ export default function ModalMovie({
                         size="sm"
                         key={idx}
                       >
-                        {genreData.filter(
+                        {
+                          genreData.filter(
                             (item: { id: number; name: string }) =>
                               item.id === genre
                           )[0].name
